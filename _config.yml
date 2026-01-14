@@ -1,0 +1,42 @@
+################################################################################
+# Jupyter Book configuration for the CHE597 course notebooks
+# Docs: https://jupyterbook.org/en/stable/customize/config.html
+################################################################################
+
+# Book settings
+title: Purdue Data Science in Chemical Engineering – Course Notebooks
+author: David E. Bernal Neira · Davidson School of Chemical Engineering, Purdue University
+copyright: "2026"
+
+# Repository info (enables repo buttons)
+repository:
+  url: https://github.com/SECQUOIA/PU_CHE597_DSinChemE
+  path_to_book: .
+  branch: main
+
+# Execution settings: avoid executing notebooks during CI to keep builds fast/stable
+execute:
+  execute_notebooks: "off"  # 'auto' to execute, 'off' to use saved outputs
+
+# HTML options
+html:
+  use_repository_button: true
+  use_issues_button: true
+  use_edit_page_button: false
+  extra_navbar: |
+    Built with <a href="https://jupyterbook.org/">Jupyter Book</a>.
+
+# Launch buttons (adds an "Open in Colab" button to each notebook page)
+launch_buttons:
+  colab_url: https://colab.research.google.com
+  # You can also enable Binder or Thebe later if desired
+  # binderhub_url: https://mybinder.org
+  # thebe: false
+
+# Sphinx configuration (optional overrides)
+sphinx:
+  config:
+    html_show_copyright: false
+    # Suppress warnings for internal notebook cross-references
+    suppress_warnings:
+      - "myst.xref_missing"

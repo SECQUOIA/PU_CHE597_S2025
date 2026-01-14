@@ -1,0 +1,37 @@
+version: 1
+project:
+  title: Purdue Data Science in Chemical Engineering – Course Notebooks
+  authors:
+    - name: David E. Bernal Neira · Davidson School of Chemical Engineering
+    - name: Purdue University
+  copyright: '2026'
+  github: SECQUOIA/PU_CHE597_DSinChemE
+  toc:
+    - file: README.md
+    - title: Lessons
+      children:
+        - file: 1-Python_Overview/Python_Intro.ipynb
+        - file: 2-Numpy/Numpy.ipynb
+        - file: 3-Matplotlib/Matplotlib.ipynb
+        - file: 4-Pandas_Overview/Pandas.ipynb
+        - file: 5-Pandas_Example/Pandas_Example.ipynb
+        - file: 5b-Iterative_Code_Development/Iterative_Development.ipynb
+        - file: 6-EoA_Dow_Example/Elements_of_Data_Analysis.ipynb
+        - file: 6b-EoA_Clustering/Elements_of_Data_Analysis.ipynb
+        - file: 7-EoA_Outliers_and_PCA/EoA_Outliers_and_PCA.ipynb
+        - file: 8-Linear_Regression/Linear_Regression.ipynb
+        - file: 9-Gradient_Based_Optimization/Optimization-Gradient_Based.ipynb
+        - file: 10-Heuristic_Optimization/Optimization_Heuristic.ipynb
+        - file: 11-Parameter_Estimation/Parameter_Estimation.ipynb
+        - file: 12-Decision_Trees_and_Forests/Decision_Trees_and_Forests.ipynb
+        - file: 13-Classification/Supervised.ipynb
+        - file: 14-Deep_Learning/Deep_Learning.ipynb
+        - file: 15-Pytorch/PyTorch.ipynb
+        - file: 16-Pytorch_Convolution/PyTorch_Convolutions.ipynb
+        - file: 17-Transfer_Learning/Transfer_Learning.ipynb
+        - file: 18-Gaussian_Processes/Gaussian_Processes.ipynb
+        - file: 19-Unsupervised_Learning/Unsupervised.ipynb
+site:
+  options:
+    folders: true
+  template: book-theme

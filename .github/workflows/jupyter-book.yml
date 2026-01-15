@@ -7,6 +7,12 @@ on:
       - "**/*.ipynb"
       - "myst.yml"
       - "README.md"
+  pull_request:
+    branches: [ main ]
+    paths:
+      - "**/*.ipynb"
+      - "myst.yml"
+      - "README.md"
   workflow_dispatch:
 
 permissions:
@@ -15,11 +21,12 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages"
+  group: "pages-${{ github.ref }}"
   cancel-in-progress: true
 
 jobs:
-  build-deploy:
+  # Build job - runs on both PRs and pushes to main
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -44,5 +51,15 @@ jobs:
         with:
           path: "_build/html"
 
+  # Deploy job - only runs on push to main (not on PRs)
+  deploy:
+    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
       - name: Deploy to GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v4

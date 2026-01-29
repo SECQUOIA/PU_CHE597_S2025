@@ -5,6 +5,9 @@ project:
     - name: David E. Bernal Neira · Davidson School of Chemical Engineering
     - name: Purdue University
   copyright: '2026'
+  license:
+    content: CC-BY-4.0
+    code: MIT
   github: SECQUOIA/PU_CHE597_DSinChemE
   settings:
     output_matplotlib_strings: remove

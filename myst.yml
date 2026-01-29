@@ -6,6 +6,8 @@ project:
     - name: Purdue University
   copyright: '2026'
   github: SECQUOIA/PU_CHE597_DSinChemE
+  settings:
+    output_matplotlib_strings: remove
   toc:
     - file: README.md
     - title: Lessons

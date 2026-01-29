@@ -44,12 +44,14 @@ jobs:
 
       - name: Build Jupyter Book
         run: |
-          jupyter book build --ci
+          jupyter book build --html --ci
+        env:
+          BASE_URL: /PU_CHE597_DSinChemE/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: "_build/site"
+          path: "_build/html"
 
   # Deploy job - only runs on push to main (not on PRs)
   deploy:

@@ -5,8 +5,13 @@ on:
     branches: [ main ]
     paths:
       - "**/*.ipynb"
-      - "_config.yml"
-      - "_toc.yml"
+      - "myst.yml"
+      - "README.md"
+  pull_request:
+    branches: [ main ]
+    paths:
+      - "**/*.ipynb"
+      - "myst.yml"
       - "README.md"
   workflow_dispatch:
 
@@ -16,11 +21,12 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages"
+  group: "pages-${{ github.ref }}"
   cancel-in-progress: true
 
 jobs:
-  build-deploy:
+  # Build job - runs on both PRs and pushes to main
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -29,21 +35,31 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.10'
 
-      - name: Install dependencies
+      - name: Install Jupyter Book v2
         run: |
           python -m pip install --upgrade pip
-          pip install "jupyter-book<2"
+          pip install jupyter-book
 
       - name: Build Jupyter Book
         run: |
-          jupyter-book build .
+          jupyter book build --ci
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: "_build/html"
+          path: "_build/site"
 
+  # Deploy job - only runs on push to main (not on PRs)
+  deploy:
+    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
       - name: Deploy to GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v4

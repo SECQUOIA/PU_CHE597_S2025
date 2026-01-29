@@ -5,12 +5,14 @@ on:
     branches: [ main ]
     paths:
       - "**/*.ipynb"
+      - ".github/workflows/jupyter-book.yml"
       - "myst.yml"
       - "README.md"
   pull_request:
     branches: [ main ]
     paths:
       - "**/*.ipynb"
+      - ".github/workflows/jupyter-book.yml"
       - "myst.yml"
       - "README.md"
   workflow_dispatch:

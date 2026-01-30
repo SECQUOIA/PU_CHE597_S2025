@@ -20,9 +20,8 @@ project:
         - file: 3-Matplotlib/Matplotlib.ipynb
         - file: 4-Pandas_Overview/Pandas.ipynb
         - file: 5-Pandas_Example/Pandas_Example.ipynb
-        - file: 5b-Iterative_Code_Development/Iterative_Development.ipynb
-        - file: 6-EoA_Dow_Example/Elements_of_Data_Analysis.ipynb
-        - file: 6b-EoA_Clustering/Elements_of_Data_Analysis.ipynb
+        - file: 6-Iterative_Code_Development/Iterative_Development.ipynb
+        - file: 7-EoA_Dow_Example/Elements_of_Data_Analysis.ipynb
         - file: 8-Linear_Regression/Linear_Regression.ipynb
         - file: 9-Gradient_Based_Optimization/Optimization-Gradient_Based.ipynb
         - file: 10-Heuristic_Optimization/Optimization_Heuristic.ipynb
@@ -36,6 +35,7 @@ project:
         - file: 18-Transfer_Learning/Transfer_Learning.ipynb
         - file: 19-Gaussian_Processes/Gaussian_Processes.ipynb
         - file: 20-Unsupervised_Learning/Unsupervised.ipynb
+        - file: 21-EoA_Clustering/Elements_of_Data_Analysis.ipynb
 site:
   options:
     folders: true

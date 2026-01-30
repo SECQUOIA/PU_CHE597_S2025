@@ -23,7 +23,6 @@ project:
         - file: 5b-Iterative_Code_Development/Iterative_Development.ipynb
         - file: 6-EoA_Dow_Example/Elements_of_Data_Analysis.ipynb
         - file: 6b-EoA_Clustering/Elements_of_Data_Analysis.ipynb
-        - file: 7-EoA_Outliers_and_PCA/EoA_Outliers_and_PCA.ipynb
         - file: 8-Linear_Regression/Linear_Regression.ipynb
         - file: 9-Gradient_Based_Optimization/Optimization-Gradient_Based.ipynb
         - file: 10-Heuristic_Optimization/Optimization_Heuristic.ipynb

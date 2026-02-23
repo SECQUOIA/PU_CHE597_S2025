@@ -36,6 +36,7 @@ project:
         - file: 19-Gaussian_Processes/Gaussian_Processes.ipynb
         - file: 20-Unsupervised_Learning/Unsupervised.ipynb
         - file: 21-EoA_Clustering/Elements_of_Data_Analysis.ipynb
+        - file: 22-Quantum_Machine_Learning/hybrid_qnns.ipynb
 site:
   options:
     folders: true

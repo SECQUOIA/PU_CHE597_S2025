@@ -24,7 +24,7 @@ project:
         - file: 7-EoA_Dow_Example/Elements_of_Data_Analysis.ipynb
         - file: 8-Linear_Regression/Linear_Regression.ipynb
         - file: 9-Gradient_Based_Optimization/Optimization-Gradient_Based.ipynb
-        - file: 10-Heuristic_Optimization/Optimization_Heuristic.ipynb
+        - file: 10-Heuristic_Optimization/Optimization_Heuristics.ipynb
         - file: 11-Parameter_Estimation/Parameter_Estimation.ipynb
         - file: 12-Decision_Trees_and_Forests/Decision_Trees_and_Forests.ipynb
         - file: 13-Classification/Classification.ipynb

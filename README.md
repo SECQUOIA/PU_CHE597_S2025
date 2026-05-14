@@ -12,7 +12,7 @@ Principal Investigator, [SECQUOIA](https://secquoia.github.io/)
 
 ## Jupyter Book
 All lessons and materials are organized as a Jupyter Book, including:
-- 19 interactive Jupyter notebooks (one per lesson)
+- Interactive Jupyter notebooks for each lesson
 - Example datasets and code
 - Direct launch to Google Colab for each notebook
 

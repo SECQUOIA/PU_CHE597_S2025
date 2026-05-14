@@ -62,6 +62,7 @@
   "quantum-machine-learning.hybrid-qnns": "22-Quantum_Machine_Learning/hybrid_qnns.ipynb",
   "quantum-machine-learning/hybrid-qnns": "22-Quantum_Machine_Learning/hybrid_qnns.ipynb"
 };
+        const notebookPaths = new Set(Object.values(map));
         const ref = document.referrer || "";
         if (!ref) {
           window.location.replace(fallback);
@@ -94,7 +95,8 @@
         }
         const keySlash = parts.join("/");
         const keyDot = parts.join(".");
-        const nbPath = map[keySlash] || map[keyDot];
+        const directNotebookPath = keySlash.endsWith(".ipynb") ? keySlash : keySlash + ".ipynb";
+        const nbPath = map[keySlash] || map[keyDot] || (notebookPaths.has(directNotebookPath) ? directNotebookPath : "");
         if (!nbPath) {
           window.location.replace(fallback);
           return;

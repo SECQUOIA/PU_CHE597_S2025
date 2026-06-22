@@ -25,6 +25,15 @@ HTML_LINK_RE = re.compile(r"\b(?:href|src)=[\"']([^\"']+)[\"']")
 COLAB_MAP_RE = re.compile(r'"([^"]+)":\s*"([^"]+\.ipynb)"')
 MYST_FILE_RE = re.compile(r"^\s*-?\s*file:\s*([^#\n]+?)\s*$")
 TEXT_SUFFIXES = {".html", ".ipynb", ".md", ".yaml", ".yml"}
+PATH_ASSIGN_RE = re.compile(r"\b(\w+)\s*=\s*Path\(\s*['\"]([^'\"]+)['\"]\s*\)")
+READ_LOCAL_FILE_PATTERNS = (
+    re.compile(r"\bpd\.read_(?:csv|excel|table|fwf)\(\s*['\"]([^'\"]+)['\"]"),
+    re.compile(r"\bpd\.read_(?:csv|excel|table|fwf)\(\s*(\w+)\s*(?:,|\))"),
+    re.compile(r"\bnp\.(?:loadtxt|genfromtxt)\(\s*['\"]([^'\"]+)['\"]"),
+    re.compile(r"\bnp\.(?:loadtxt|genfromtxt)\(\s*(\w+)\s*(?:,|\))"),
+    re.compile(r"\b(?:with\s+)?open\(\s*['\"]([^'\"]+)['\"]\s*(?:,\s*['\"]([^'\"]*)['\"])?"),
+)
+DOWNLOAD_MARKERS = ("!wget", "urlretrieve", "urlopen", "requests.get")
 
 
 def tracked_files() -> list[Path]:
@@ -167,6 +176,60 @@ def check_colab_redirect(notebook_entries: list[str], problems: list[str]) -> No
             break
 
 
+def check_notebook_runtime_files(files: list[Path], problems: list[str]) -> None:
+    tracked = {repo_relative(path) for path in files}
+
+    for path in files:
+        if path.suffix != ".ipynb":
+            continue
+
+        notebook = json.loads(path.read_text(encoding="utf-8"))
+        path_vars: dict[str, str] = {}
+        previous_source = ""
+
+        for cell in notebook.get("cells", []):
+            source = cell.get("source", "")
+            source_text = "".join(source) if isinstance(source, list) else source
+
+            for var_name, filename in PATH_ASSIGN_RE.findall(source_text):
+                path_vars[var_name] = filename
+
+            if cell.get("cell_type") == "code":
+                for pattern in READ_LOCAL_FILE_PATTERNS:
+                    for match in pattern.finditer(source_text):
+                        target_token = match.group(1)
+                        filename = path_vars.get(target_token, target_token)
+                        mode = match.group(2) if len(match.groups()) > 1 else ""
+
+                        if mode and any(flag in mode for flag in ("w", "a", "x", "+")):
+                            continue
+
+                        parsed = urlsplit(filename)
+                        if (
+                            parsed.scheme
+                            or parsed.netloc
+                            or not filename
+                            or filename.startswith("/")
+                            or "/" in filename
+                        ):
+                            continue
+
+                        candidate = path.parent / filename
+                        if repo_relative(candidate) not in tracked:
+                            continue
+
+                        source_before_read = previous_source + source_text[: match.start()]
+                        has_download_guard = filename in source_before_read and any(
+                            marker in source_before_read for marker in DOWNLOAD_MARKERS
+                        )
+                        if not has_download_guard:
+                            problems.append(
+                                f"{repo_relative(path)} reads {filename} before a Colab download guard"
+                            )
+
+            previous_source += "\n" + source_text
+
+
 def main() -> int:
     files = tracked_files()
     problems: list[str] = []
@@ -175,6 +238,7 @@ def main() -> int:
     check_colab_and_github_paths(files, problems)
     notebook_entries = check_myst_toc(problems)
     check_colab_redirect(notebook_entries, problems)
+    check_notebook_runtime_files(files, problems)
 
     if problems:
         for problem in problems:
